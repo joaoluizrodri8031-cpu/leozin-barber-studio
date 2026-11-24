@@ -1,0 +1,877 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Leozin Barber Studio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Leozin Barber Studio — cortes, fades e barba em Rio das Ostras. Agende online nas unidades Jardim Marilea e Cidade Praiana.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: preto + ouro da marca. Hero com foto e logo, faixas de seção com título condensado, modal de agendamento em etapas. */
+:root{
+  --ink:#0c0a08;        /* fundo */
+  --char:#16120e;       /* superfícies */
+  --char-2:#1f1a14;     /* superfície elevada */
+  --line:#33291e;       /* bordas */
+  --gold:#d9a441;       /* ouro da coroa */
+  --gold-hi:#f0c56a;
+  --on-gold:#1a1207;
+  --bone:#f2ece2;       /* texto */
+  --muted:#a99d8b;
+  --danger:#e0775c;
+  --ok:#8fc47a;
+  --f-display:"Bebas Neue","Oswald","Arial Narrow",Impact,sans-serif;
+  --f-body:"Montserrat","Segoe UI",system-ui,-apple-system,sans-serif;
+  --radius:14px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--bone);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+img{display:block;max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold-hi);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* ---------- Botões ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;border:0;cursor:pointer;font:700 .82rem/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase;padding:1.05rem 1.6rem;border-radius:999px;text-decoration:none;transition:transform .15s ease,background .2s ease,color .2s ease,border-color .2s}
+.btn-gold{background:var(--gold);color:var(--on-gold)}
+.btn-gold:hover{background:var(--gold-hi);transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--bone);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold-hi)}
+.btn-sm{padding:.75rem 1.15rem;font-size:.74rem}
+.btn[disabled]{opacity:.35;cursor:not-allowed;transform:none}
+
+/* ---------- Header ---------- */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--ink) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:68px}
+.brand{display:flex;align-items:center;gap:.55rem;text-decoration:none}
+.brand svg{width:26px;height:20px;color:var(--gold)}
+.brand b{font:400 1.7rem/1 var(--f-display);letter-spacing:.06em}
+.brand small{font-size:.62rem;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;font-weight:600}
+.nav{display:flex;align-items:center;gap:2rem}
+.nav a{font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;color:var(--muted)}
+.nav a:hover{color:var(--bone)}
+@media (max-width:760px){.nav a{display:none}.brand small{display:none}.nav{gap:.5rem}.nav .btn-sm{padding:.7rem .8rem;letter-spacing:.08em;font-size:.68rem}}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:var(--ink)}
+.hero-photo{position:absolute;inset:0 0 0 auto;width:min(62%,820px);height:100%;object-fit:cover;object-position:68% 30%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--ink) 34%,color-mix(in srgb,var(--ink) 70%,transparent) 55%,color-mix(in srgb,var(--ink) 10%,transparent) 100%),linear-gradient(0deg,var(--ink) 0%,transparent 30%)}
+.hero .wrap{position:relative;z-index:1;padding-block:clamp(2.5rem,7vw,6rem) clamp(3rem,7vw,6rem)}
+.hero-logo{width:min(480px,100%);mix-blend-mode:lighten;margin-left:-4%;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 62%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 62%,transparent 100%)}
+.hero h1{font:400 clamp(2.3rem,5.4vw,4rem)/.95 var(--f-display);letter-spacing:.02em;margin:.6rem 0 1rem;max-width:15ch;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{max-width:44ch;color:var(--muted);margin:0 0 2rem}
+.hero-cta{display:flex;flex-wrap:wrap;gap:.8rem}
+.hero-meta{display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;margin-top:2.4rem;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.hero-meta span{display:flex;align-items:center;gap:.5rem}
+.hero-meta span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold)}
+@media (max-width:760px){
+  .hero-photo{width:100%;opacity:.45}
+  .hero::after{background:linear-gradient(0deg,var(--ink) 8%,color-mix(in srgb,var(--ink) 55%,transparent) 60%,color-mix(in srgb,var(--ink) 80%,transparent) 100%)}
+}
+
+/* ---------- Seções ---------- */
+section.block{padding-block:clamp(4rem,9vw,7rem)}
+.head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:1rem 2rem;margin-bottom:2.6rem}
+.eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin:0 0 .4rem}
+.head h2{font:400 clamp(2.6rem,6vw,4.4rem)/.9 var(--f-display);letter-spacing:.02em;margin:0;text-wrap:balance}
+.head p{max-width:42ch;color:var(--muted);margin:0}
+
+/* Faixa dourada */
+.ribbon{background:var(--gold);color:var(--on-gold);overflow:hidden;border-block:1px solid var(--gold-hi)}
+.ribbon-track{display:flex;gap:2.4rem;white-space:nowrap;padding-block:.9rem;font:400 1.6rem/1 var(--f-display);letter-spacing:.08em;animation:slide 38s linear infinite;width:max-content}
+.ribbon-track span{display:flex;align-items:center;gap:2.4rem}
+.ribbon-track span::after{content:"✂";font-size:1.1rem}
+@keyframes slide{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.ribbon-track{animation:none}}
+
+/* ---------- Portfólio ---------- */
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:clamp(190px,24vw,300px);gap:12px}
+.shot{position:relative;margin:0;border-radius:var(--radius);overflow:hidden;background:var(--char);cursor:zoom-in;border:0;padding:0;color:inherit;text-align:left}
+.shot img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease,filter .4s}
+.shot:hover img{transform:scale(1.05)}
+.shot .cap{position:absolute;inset:auto 0 0 0;padding:2.4rem 1rem .9rem;background:linear-gradient(0deg,rgba(8,6,4,.92),transparent);font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.shot .cap small{display:block;color:var(--gold);font-size:.66rem;letter-spacing:.2em}
+.shot.big{grid-column:span 2;grid-row:span 2}
+@media (max-width:760px){.gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:190px}.shot.big{grid-row:span 1;grid-column:span 2}.shot:last-child{grid-column:span 2}}
+
+.lightbox{position:fixed;inset:0;z-index:90;background:rgba(6,5,3,.94);display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lightbox img{max-height:84vh;width:auto;border-radius:var(--radius)}
+.lightbox button{position:absolute;top:calc(16px + env(safe-area-inset-top,0px));right:calc(16px + env(safe-area-inset-right,0px))}
+
+/* ---------- Barbeiros ---------- */
+.team{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.barber{display:flex;flex-direction:column;gap:.9rem}
+.barber-photo{position:relative;aspect-ratio:4/5;border-radius:var(--radius);overflow:hidden;background:var(--char);max-width:100%}
+.barber-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(.35) contrast(1.05);transition:filter .4s}
+.barber:hover .barber-photo img{filter:none}
+.barber-photo .unit-tag{position:absolute;left:10px;top:10px;background:rgba(12,10,8,.82);border:1px solid var(--line);color:var(--gold-hi);font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:.4rem .6rem;border-radius:999px}
+.barber h3{font:400 2rem/1 var(--f-display);letter-spacing:.04em;margin:0}
+.barber p{margin:.15rem 0 0;font-size:.86rem;color:var(--muted)}
+.barber .crown{color:var(--gold);width:22px;height:16px;vertical-align:-1px;margin-left:.3rem}
+@media (max-width:960px){.team{grid-template-columns:repeat(2,1fr)}}
+
+/* ---------- Unidades ---------- */
+.units-bg{background:var(--char);border-block:1px solid var(--line)}
+.units{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.unit{position:relative;background:var(--ink);border:1px solid var(--line);border-radius:var(--radius);padding:2rem;display:flex;flex-direction:column;gap:1.2rem;min-width:0}
+.unit h3{font:400 2.4rem/.95 var(--f-display);margin:0;letter-spacing:.03em}
+.unit h3 small{display:block;font:700 .7rem/1.4 var(--f-body);letter-spacing:.28em;color:var(--gold);margin-bottom:.4rem}
+.unit dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.55rem 1.2rem;font-size:.9rem}
+.unit dt{color:var(--muted);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;padding-top:.2rem}
+.unit dd{margin:0}
+.unit .row{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:auto}
+@media (max-width:760px){.units{grid-template-columns:1fr}.unit{padding:1.5rem}}
+
+/* ---------- CTA final ---------- */
+.final{text-align:center}
+.final h2{font:400 clamp(2.8rem,8vw,5.6rem)/.9 var(--f-display);margin:0 0 1.4rem;text-wrap:balance}
+.final h2 em{font-style:normal;color:var(--gold)}
+
+/* ---------- Rodapé ---------- */
+footer{border-top:1px solid var(--line);background:#080706;padding-block:3.5rem 2rem;font-size:.88rem;color:var(--muted)}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:2rem}
+.foot img{width:190px;mix-blend-mode:lighten;margin:-1rem 0 0 -1rem;-webkit-mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 60%,transparent 100%);mask-image:radial-gradient(ellipse 50% 50% at 50% 50%,#000 60%,transparent 100%)}
+.foot h4{font:700 .7rem/1 var(--f-body);letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin:0 0 1rem}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:.45rem}
+.foot a{text-decoration:none}
+.foot a:hover{color:var(--bone)}
+.hours{font-variant-numeric:tabular-nums}
+.hours li{display:flex;justify-content:space-between;gap:1rem}
+.legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.6rem;margin-top:3rem;padding-top:1.4rem;border-top:1px solid var(--line);font-size:.76rem}
+@media (max-width:860px){.foot{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.foot{grid-template-columns:1fr}}
+
+/* ---------- Modal de agendamento ---------- */
+dialog.book{width:min(680px,calc(100% - 24px));max-height:min(92vh,880px);padding:0;border:1px solid var(--line);border-radius:20px;background:var(--char);color:var(--bone);overflow:hidden}
+dialog.book::backdrop{background:rgba(5,4,3,.78);backdrop-filter:blur(3px)}
+.book-inner{display:flex;flex-direction:column;max-height:inherit}
+.book-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.1rem 1.4rem;border-bottom:1px solid var(--line)}
+.book-head b{font:400 1.6rem/1 var(--f-display);letter-spacing:.05em}
+.x{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--bone);font-size:1.3rem;cursor:pointer;flex:none}
+.x:hover{border-color:var(--gold);color:var(--gold-hi)}
+.steps{display:flex;gap:6px;padding:1rem 1.4rem 0;list-style:none;margin:0}
+.steps li{flex:1;min-width:0}
+.steps li i{display:block;height:3px;border-radius:2px;background:var(--line)}
+.steps li span{display:block;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:.45rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.steps li.on i{background:var(--gold)}
+.steps li.on span{color:var(--bone)}
+.book-body{padding:1.4rem;overflow-y:auto;flex:1;min-height:0}
+.book-body h3{font:400 2rem/1 var(--f-display);letter-spacing:.03em;margin:0 0 .35rem}
+.book-body .lead{color:var(--muted);font-size:.9rem;margin:0 0 1.4rem}
+.book-foot{display:flex;justify-content:space-between;align-items:center;gap:.8rem;padding:1rem 1.4rem;border-top:1px solid var(--line);background:var(--char-2)}
+.book-foot .summary{font-size:.78rem;color:var(--muted);min-width:0}
+
+.field{display:grid;gap:.4rem;margin-bottom:1rem}
+.field label{font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.field input{font:500 1rem var(--f-body);color:var(--bone);background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:.9rem 1rem;width:100%}
+.field input:focus{outline:none;border-color:var(--gold)}
+.field input[aria-invalid="true"]{border-color:var(--danger)}
+.err{color:var(--danger);font-size:.8rem;min-height:1.2em;margin:-.2rem 0 .6rem}
+.switch{font-size:.85rem;color:var(--muted);margin-top:.4rem}
+.link{background:none;border:0;padding:0;color:var(--gold-hi);font:inherit;font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.hello{display:flex;align-items:center;justify-content:space-between;gap:1rem;background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:.7rem 1rem;font-size:.85rem;margin-bottom:1.2rem}
+
+.choices{display:grid;gap:12px}
+.choice{display:flex;align-items:center;gap:1rem;text-align:left;width:100%;background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:1.1rem;color:var(--bone);cursor:pointer;font:inherit;transition:border-color .2s,background .2s}
+.choice:hover{border-color:color-mix(in srgb,var(--gold) 60%,var(--line))}
+.choice[aria-pressed="true"]{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 9%,var(--ink))}
+.choice .pin{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--char-2);color:var(--gold)}
+.choice .pin svg{width:22px;height:22px}
+.choice strong{display:block;font:400 1.45rem/1 var(--f-display);letter-spacing:.04em}
+.choice small{color:var(--muted);font-size:.82rem}
+
+.services{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.svc{display:flex;flex-direction:column;align-items:flex-start;gap:.35rem;text-align:left;background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;color:var(--bone);cursor:pointer;font:inherit;transition:border-color .2s,background .2s;min-width:0}
+.svc:hover{border-color:color-mix(in srgb,var(--gold) 60%,var(--line))}
+.svc span{font:400 1.35rem/1.05 var(--f-display);letter-spacing:.04em}
+.svc small{font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+.svc[aria-pressed="true"]{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 9%,var(--ink))}
+@media (max-width:420px){.services{grid-template-columns:1fr}}
+@media (max-width:520px){.steps{gap:4px}.steps li span{font-size:.55rem;letter-spacing:.04em}}
+.sub{font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:1.4rem 0 .7rem}
+.barber-pick{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
+.bp{background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:.5rem;cursor:pointer;color:var(--bone);font:inherit;text-align:left}
+.bp img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px}
+.bp span{display:block;font:400 1.3rem/1 var(--f-display);letter-spacing:.04em;padding:.55rem .2rem .2rem}
+.bp[aria-pressed="true"]{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+
+.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.day{background:var(--ink);border:1px solid var(--line);border-radius:10px;padding:.6rem .2rem;color:var(--bone);cursor:pointer;font:inherit;text-align:center;min-width:0}
+.day small{display:block;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.day b{display:block;font:400 1.6rem/1.1 var(--f-display)}
+.day em{display:block;font-style:normal;font-size:.6rem;color:var(--muted)}
+.day[aria-pressed="true"]{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+.day[aria-pressed="true"] small,.day[aria-pressed="true"] em{color:var(--on-gold)}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:8px;font-variant-numeric:tabular-nums}
+.slot{background:var(--ink);border:1px solid var(--line);border-radius:8px;padding:.6rem 0;color:var(--bone);font:600 .9rem var(--f-body);cursor:pointer}
+.slot:hover:not([disabled]){border-color:var(--gold)}
+.slot[disabled]{color:color-mix(in srgb,var(--muted) 55%,transparent);text-decoration:line-through;cursor:not-allowed;background:transparent}
+.slot[aria-pressed="true"]{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+.legend{display:flex;gap:1.2rem;font-size:.72rem;color:var(--muted);margin-top:.8rem}
+.empty{color:var(--muted);font-size:.9rem;background:var(--ink);border:1px dashed var(--line);border-radius:10px;padding:1rem;text-align:center}
+
+.ticket{background:var(--ink);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.ticket dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:.8rem 1.4rem;padding:1.3rem 1.4rem}
+.ticket dt{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding-top:.2rem}
+.ticket dd{margin:0;font-weight:600}
+.ticket .stub{border-top:1px dashed var(--line);padding:1rem 1.4rem;display:flex;justify-content:space-between;gap:1rem;font-size:.8rem;color:var(--muted)}
+.done{text-align:center;padding:1rem 0}
+.done .seal{width:76px;height:76px;border-radius:50%;margin:0 auto 1rem;display:grid;place-items:center;background:var(--gold);color:var(--on-gold)}
+.done .seal svg{width:40px;height:30px}
+.mine{margin-top:1.6rem;text-align:left}
+.mine li{display:flex;justify-content:space-between;gap:1rem;padding:.7rem 0;border-bottom:1px solid var(--line);font-size:.86rem}
+.mine ul{list-style:none;padding:0;margin:0}
+.alert{background:color-mix(in srgb,var(--danger) 14%,var(--ink));border:1px solid color-mix(in srgb,var(--danger) 55%,var(--line));color:var(--bone);border-radius:10px;padding:.75rem 1rem;font-size:.88rem;margin:0 0 1rem}
+.notice{background:color-mix(in srgb,var(--ok) 12%,var(--ink));border:1px solid color-mix(in srgb,var(--ok) 50%,var(--line));border-radius:10px;padding:.75rem 1rem;font-size:.88rem;margin:0 0 1rem}
+.loading{color:var(--muted);font-size:.9rem;padding:1.4rem 0;text-align:center}
+.loading::before{content:"";display:inline-block;width:14px;height:14px;margin-right:.6rem;vertical-align:-2px;border:2px solid var(--line);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.loading::before{animation:none}}
+.check{display:flex;gap:.7rem;align-items:flex-start;font-size:.84rem;color:var(--muted);line-height:1.5;margin:.2rem 0 .6rem;cursor:pointer}
+.check input{flex:none;width:18px;height:18px;margin-top:.15rem;accent-color:var(--gold)}
+.check input[aria-invalid="true"]{outline:2px solid var(--danger);outline-offset:2px}
+.inline-link{color:var(--gold-hi)}
+.hello-links{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-danger{background:var(--danger);color:var(--on-gold)}
+.btn-danger:hover{filter:brightness(1.08)}
+.day[disabled]{opacity:.4;cursor:not-allowed}
+.bp-ph{display:grid;place-items:center;aspect-ratio:1;border-radius:8px;background:var(--char-2);font:400 2rem var(--f-display);color:var(--gold)}
+.appts{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.appt{display:grid;grid-template-columns:auto 1fr;gap:.4rem 1.1rem;background:var(--ink);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem}
+.appt-when{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:72px;border-right:1px solid var(--line);padding-right:1.1rem;font-variant-numeric:tabular-nums}
+.appt-when b{font:400 1.9rem/1 var(--f-display);color:var(--gold)}
+.appt-when span{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.appt-info{display:flex;flex-direction:column;gap:.1rem;min-width:0;font-size:.86rem}
+.appt-info strong{font:400 1.3rem/1.1 var(--f-display);letter-spacing:.03em}
+.appt-actions{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:.5rem;border-top:1px dashed var(--line);padding-top:.7rem;margin-top:.3rem}
+.appt-actions .ask{margin-right:auto;font-size:.86rem;font-weight:600}
+.note{font-size:.8rem;color:var(--muted);margin-right:auto}
+@media (max-width:520px){
+  .book-body{padding:1.1rem}
+  .day b{font-size:1.3rem}
+  .ticket dl{grid-template-columns:1fr;gap:.2rem}
+  .book-foot .summary{display:none}
+  .barber-pick{grid-template-columns:repeat(2,1fr)}
+  .bp img{aspect-ratio:4/3}
+  .ticket dd{margin-bottom:.6rem}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="crown" viewBox="0 0 64 48"><path fill="currentColor" d="M4 14l14 12L32 4l14 22 14-12-6 28H10z"/><rect x="8" y="42" width="48" height="5" rx="2" fill="currentColor"/></symbol>
+  <symbol id="pin" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio" aria-label="Leozin Barber Studio, início">
+      <svg><use href="#crown"/></svg><b>LEOZIN</b><small>Barber Studio</small>
+    </a>
+    <nav class="nav" aria-label="Seções">
+      <a href="#portfolio">Portfólio</a>
+      <a href="#barbeiros">Barbeiros</a>
+      <a href="#unidades">Unidades</a>
+      <button class="btn btn-ghost btn-sm" data-open-meus type="button">Meus horários</button>
+      <button class="btn btn-gold btn-sm" data-open-booking type="button">Agendar</button>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <section class="hero">
+    <img class="hero-photo" src="assets/leozin.jpg" alt="Leozin cortando o cabelo de um cliente com pente e tesoura">
+    <div class="wrap">
+      <img class="hero-logo" src="assets/logo-crop.webp" alt="Leozin Barber Studio, desde 2021">
+      <h1>Corte de respeito, <em>atendimento de rei.</em></h1>
+      <p>Fade, navalhado e barba feitos com calma e precisão. Escolha a unidade, o barbeiro e o horário em menos de um minuto.</p>
+      <div class="hero-cta">
+        <button class="btn btn-gold" data-open-booking type="button">Agendar horário</button>
+        <a class="btn btn-ghost" href="#portfolio">Ver portfólio</a>
+      </div>
+      <div class="hero-meta">
+        <span>Jardim Marilea</span><span>Cidade Praiana</span><span>Horários a cada 30 min</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="ribbon" aria-hidden="true">
+    <div class="ribbon-track">
+      <span>Low fade</span><span>Mid fade</span><span>Navalhado</span><span>Barba na toalha quente</span><span>Degradê na tesoura</span><span>Pigmentação</span><span>Sobrancelha</span><span>Freestyle</span>
+      <span>Low fade</span><span>Mid fade</span><span>Navalhado</span><span>Barba na toalha quente</span><span>Degradê na tesoura</span><span>Pigmentação</span><span>Sobrancelha</span><span>Freestyle</span>
+    </div>
+  </div>
+
+  <section class="block" id="portfolio">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <p class="eyebrow">Portfólio</p>
+          <h2>Trabalhos da cadeira</h2>
+        </div>
+        <p>Alguns cortes e barbas feitos no estúdio. Toque numa foto para ver maior.</p>
+      </div>
+      <div class="gallery">
+        <button class="shot big" type="button" data-src="assets/p1.jpg"><img src="assets/p1.jpg" alt="Barbeiro tatuado acertando o contorno com navalha" loading="lazy"><span class="cap"><small>Navalha</small>Contorno navalhado</span></button>
+        <button class="shot" type="button" data-src="assets/p2.jpg"><img src="assets/p2.jpg" alt="Corte com tesoura e pente na lateral" loading="lazy"><span class="cap"><small>Tesoura</small>Degradê na tesoura</span></button>
+        <button class="shot" type="button" data-src="assets/p3.jpg"><img src="assets/p3.jpg" alt="Barba sendo aparada na tesoura" loading="lazy"><span class="cap"><small>Barba</small>Barba desenhada</span></button>
+        <button class="shot" type="button" data-src="assets/p4.jpg"><img src="assets/p4.jpg" alt="Corte com risco desenhado na lateral" loading="lazy"><span class="cap"><small>Freestyle</small>Risco + mid fade</span></button>
+        <button class="shot" type="button" data-src="assets/p5.jpg"><img src="assets/p5.jpg" alt="Máquina fazendo o acabamento do fade" loading="lazy"><span class="cap"><small>Máquina</small>Low fade</span></button>
+        <button class="shot" type="button" data-src="assets/p6.jpg"><img src="assets/p6.jpg" alt="Acabamento com máquina na lateral" loading="lazy"><span class="cap"><small>Acabamento</small>Pezinho e lateral</span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="barbeiros" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <p class="eyebrow">A equipe</p>
+          <h2>Nossos barbeiros</h2>
+        </div>
+        <p>Cada um com a sua especialidade. Você escolhe com quem quer cortar na hora de agendar.</p>
+      </div>
+      <div class="team" id="team"></div>
+    </div>
+  </section>
+
+  <section class="block units-bg" id="unidades">
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <p class="eyebrow">Onde estamos</p>
+          <h2>Duas unidades</h2>
+        </div>
+        <p>Mesmo padrão de atendimento nas duas casas. Agende na que ficar mais perto de você.</p>
+      </div>
+      <div class="units" id="units"></div>
+    </div>
+  </section>
+
+  <section class="block final">
+    <div class="wrap">
+      <p class="eyebrow">Sua vez na cadeira</p>
+      <h2>Bora dar um <em>trato</em> no visual?</h2>
+      <button class="btn btn-gold" data-open-booking type="button">Agendar agora</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <img src="assets/logo-crop.webp" alt="Leozin Barber Studio">
+        <p style="max-width:32ch;margin:0">Barbearia em Rio das Ostras desde 2021. Corte, barba e acabamento com hora marcada.</p>
+      </div>
+      <div>
+        <h4>Navegue</h4>
+        <ul>
+          <li><a href="#portfolio">Portfólio</a></li>
+          <li><a href="#barbeiros">Barbeiros</a></li>
+          <li><a href="#unidades">Unidades</a></li>
+          <li><button class="link" data-open-booking type="button">Agendar horário</button></li>
+          <li><button class="link" data-open-meus type="button">Meus agendamentos</button></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Horários</h4>
+        <ul class="hours">
+          <li><span>Ter a Sáb</span><span>09:00–19:00</span></li>
+          <li><span>Almoço</span><span>12:00–14:00</span></li>
+          <li><span>Dom e Seg</span><span>Fechado</span></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contato</h4>
+        <ul>
+          <li>Instagram: @leozinbarberstudio [EXEMPLO]</li>
+          <li>WhatsApp: [a definir]</li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© <span id="year">2026</span> Leozin Barber Studio. Todos os direitos reservados.</span>
+      <span><a href="#politica-de-privacidade">Política de Privacidade</a> · Since 2021 · Rio das Ostras/RJ</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Lightbox do portfólio -->
+<div class="lightbox" id="lightbox" hidden>
+  <img id="lightboxImg" alt="">
+  <button class="x" type="button" id="lightboxClose" aria-label="Fechar foto">×</button>
+</div>
+
+<!-- Modal de agendamento -->
+<dialog class="book" id="booking" aria-labelledby="bookTitle">
+  <div class="book-inner">
+    <div class="book-head">
+      <b id="bookTitle">Agendar horário</b>
+      <button class="x" type="button" id="closeBooking" aria-label="Fechar">×</button>
+    </div>
+    <ol class="steps" id="steps">
+      <li><i></i><span>Cadastro</span></li>
+      <li><i></i><span>Unidade</span></li>
+      <li><i></i><span>Serviço</span></li>
+      <li><i></i><span>Barbeiro e horário</span></li>
+      <li><i></i><span>Confirmação</span></li>
+    </ol>
+    <div class="book-body" id="bookBody"></div>
+    <div class="book-foot" id="bookFoot"></div>
+  </div>
+</dialog>
+
+<script>
+(() => {
+  /* ================= CONFIGURAÇÃO ================= */
+  // Cole aqui a URL do Web App do Google Apps Script (termina em /exec). Veja o README.
+  const API_URL = window.LEOZIN_API_URL || "";
+
+  /* Dados só para exibir na página. O agendamento usa a aba "Config" da planilha. [EXEMPLO] */
+  const UNITS = [
+    { id: "marilea", name: "Jardim Marilea", street: "Rua das Acácias, 120 [EXEMPLO]", area: "Jardim Marilea · Rio das Ostras/RJ",
+      phone: "[a definir]", barbers: ["leozin", "biel"] },
+    { id: "praiana", name: "Cidade Praiana", street: "Av. Beira-Mar, 845 [EXEMPLO]", area: "Cidade Praiana · Rio das Ostras/RJ",
+      phone: "[a definir]", barbers: ["rafa", "kaua"] }
+  ];
+  const BARBERS = {
+    leozin: { name: "Leozin", role: "Fundador · fade e navalha", img: "assets/leozin.jpg", owner: true },
+    biel:   { name: "Biel",   role: "Degradê e pigmentação",     img: "assets/b2.jpg" },
+    rafa:   { name: "Rafa",   role: "Tesoura e cortes clássicos", img: "assets/b3.jpg" },
+    kaua:   { name: "Kauã",   role: "Barba e toalha quente",     img: "assets/b4.jpg" }
+  };
+
+  /* ================= HELPERS ================= */
+  const $ = (s, r = document) => r.querySelector(s);
+  const el = (tag, attrs = {}, ...kids) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === "class") n.className = v;
+      else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+      else if (v !== false && v != null) n.setAttribute(k, v === true ? "" : v);
+    }
+    for (const k of kids.flat()) if (k != null && k !== false) n.append(k.nodeType ? k : document.createTextNode(k));
+    return n;
+  };
+  const svgUse = (id, cls) => { const s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); if (cls) s.setAttribute("class", cls); const u = document.createElementNS("http://www.w3.org/2000/svg", "use"); u.setAttribute("href", "#" + id); s.append(u); return s; };
+  const pad = n => String(n).padStart(2, "0");
+  const WEEK = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+  const WEEK_FULL = ["domingo", "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado"];
+  const dow = key => new Date(key + "T12:00:00Z").getUTCDay();
+  const fmtDay = key => { const [, m, d] = key.split("-"); return `${WEEK[dow(key)].toLowerCase()}, ${d}/${m}`; };
+  const fmtLong = key => { const [, m, d] = key.split("-"); return `${WEEK_FULL[dow(key)]}, ${d}/${m}`; };
+  const muted = t => el("small", { style: "color:var(--muted);font-weight:500" }, t);
+
+  /* ================= SESSÃO (token guardado neste navegador) ================= */
+  const store = {
+    get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
+    set(k, v) { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+  };
+  let session = store.get("lz_sessao"); // { token, nome, email }
+  const setSession = s => { session = s; store.set("lz_sessao", s); };
+
+  /* ================= API ================= */
+  class ApiError extends Error { constructor(msg, code) { super(msg); this.code = code; } }
+  async function api(action, data = {}, get = false) {
+    if (!API_URL) throw new ApiError("O agendamento online ainda não está ligado. Fale com a unidade pelo telefone.", "SEM_API");
+    let res;
+    try {
+      res = get
+        ? await fetch(API_URL + "?" + new URLSearchParams({ action, ...data }), { redirect: "follow" })
+        // text/plain evita a checagem de CORS (preflight) que o Apps Script não responde.
+        : await fetch(API_URL, { method: "POST", redirect: "follow", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify({ action, ...data }) });
+    } catch { throw new ApiError("Sem conexão com a agenda. Confira sua internet e tente de novo."); }
+    let j;
+    try { j = await res.json(); } catch { throw new ApiError("A agenda não respondeu como esperado. Tente de novo em instantes."); }
+    if (!j.ok) {
+      if (j.codigo === "SESSAO") setSession(null);
+      throw new ApiError(j.erro || "Não foi possível concluir.", j.codigo);
+    }
+    return j;
+  }
+  let cfgPromise = null;
+  const loadConfig = () => (cfgPromise = cfgPromise || api("config", {}, true).catch(e => { cfgPromise = null; throw e; }));
+
+  /* ================= SEÇÕES DA PÁGINA ================= */
+  const team = $("#team");
+  for (const [id, b] of Object.entries(BARBERS)) {
+    const unit = UNITS.filter(u => u.barbers.includes(id)).map(u => u.name).join(" · ");
+    team.append(el("article", { class: "barber" },
+      el("div", { class: "barber-photo" }, el("img", { src: b.img, alt: `Barbeiro ${b.name}`, loading: "lazy" }), el("span", { class: "unit-tag" }, unit)),
+      el("div", {}, el("h3", {}, b.name, b.owner ? svgUse("crown", "crown") : null), el("p", {}, b.role))
+    ));
+  }
+  const units = $("#units");
+  for (const u of UNITS) {
+    const maps = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(`${u.street.replace(" [EXEMPLO]", "")}, ${u.area.replace(" · ", ", ")}`);
+    units.append(el("article", { class: "unit" },
+      el("h3", {}, el("small", {}, "Unidade"), u.name),
+      el("dl", {},
+        el("dt", {}, "Endereço"), el("dd", {}, u.street, el("br"), u.area),
+        el("dt", {}, "Telefone"), el("dd", {}, u.phone),
+        el("dt", {}, "Horário"), el("dd", {}, "Ter a sáb, 9h às 19h"),
+        el("dt", {}, "Equipe"), el("dd", {}, u.barbers.map(b => BARBERS[b].name).join(", "))
+      ),
+      el("div", { class: "row" },
+        el("button", { class: "btn btn-gold btn-sm", type: "button", onclick: () => openBooking(u.id) }, "Agendar aqui"),
+        el("a", { class: "btn btn-ghost btn-sm", href: maps, target: "_blank", rel: "noopener" }, "Como chegar")
+      )
+    ));
+  }
+  $("#year").textContent = new Date().getFullYear();
+
+  // Lightbox
+  const lb = $("#lightbox"), lbImg = $("#lightboxImg");
+  document.querySelectorAll(".shot").forEach(s => s.addEventListener("click", () => {
+    const img = s.querySelector("img"); lbImg.src = s.dataset.src; lbImg.alt = img.alt; lb.hidden = false; $("#lightboxClose").focus();
+  }));
+  const closeLb = () => { lb.hidden = true; };
+  $("#lightboxClose").addEventListener("click", closeLb);
+  lb.addEventListener("click", e => { if (e.target === lb) closeLb(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !lb.hidden) closeLb(); });
+
+  /* ================= AGENDAMENTO ================= */
+  const dlg = $("#booking"), body = $("#bookBody"), foot = $("#bookFoot"), stepsEl = $("#steps"), titleEl = $("#bookTitle");
+  const STEP_OF = { auth: 0, unit: 1, service: 2, schedule: 3, confirm: 4 };
+  const S = {
+    view: "auth", mode: "signup", after: "book", busy: false, alert: null, notice: null,
+    unit: null, service: null, barber: null, day: null, time: null, slots: {}, last: null,
+    meus: null, prazo: 2, editing: null, askCancel: null
+  };
+  const reset = () => Object.assign(S, { unit: null, service: null, barber: null, day: null, time: null, slots: {}, last: null, editing: null, askCancel: null, alert: null, notice: null });
+
+  function showDialog() { if (!dlg.open) { if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", ""); } }
+  function openBooking(unitId) {
+    reset(); S.unit = unitId || null; S.after = "book";
+    S.view = session ? (S.unit ? "service" : "unit") : "auth";
+    render(); showDialog();
+  }
+  function openMeus() {
+    reset(); S.after = "meus";
+    S.view = session ? "meus" : "auth"; if (!session) S.mode = "login";
+    render(); showDialog();
+  }
+  document.querySelectorAll("[data-open-booking]").forEach(b => b.addEventListener("click", () => openBooking()));
+  document.querySelectorAll("[data-open-meus]").forEach(b => b.addEventListener("click", openMeus));
+  $("#closeBooking").addEventListener("click", () => dlg.close());
+  dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+
+  const go = (view, extra = {}) => { Object.assign(S, { alert: null }, extra, { view }); render(); };
+  const fail = e => { S.busy = false; if (e.code === "SESSAO") { S.mode = "login"; S.view = "auth"; } S.alert = e.message; render(); };
+
+  function render() {
+    const booking = S.view in STEP_OF;
+    titleEl.textContent = (S.after === "meus" || ["meus", "resched", "reschedConfirm"].includes(S.view)) ? "Meus agendamentos" : "Agendar horário";
+    stepsEl.hidden = !booking || S.after === "meus";
+    [...stepsEl.children].forEach((li, i) => li.classList.toggle("on", i <= (STEP_OF[S.view] ?? -1)));
+    body.replaceChildren(); foot.replaceChildren();
+    if (S.alert) body.append(el("p", { class: "alert", role: "alert" }, S.alert));
+    if (S.notice) body.append(el("p", { class: "notice", role: "status" }, S.notice));
+    VIEWS[S.view]();
+    body.scrollTop = 0;
+  }
+  const loading = txt => body.append(el("p", { class: "loading" }, txt || "Carregando…"));
+  const btn = (label, cls, onclick, disabled) => el("button", { class: `btn btn-sm ${cls}`, type: "button", disabled: !!disabled || S.busy, onclick }, label);
+  const helloBar = () => el("div", { class: "hello" },
+    el("span", {}, "Olá, ", el("strong", {}, (session?.nome || "").split(" ")[0]), "!"),
+    el("span", { class: "hello-links" },
+      S.view !== "meus" ? el("button", { class: "link", type: "button", onclick: () => { S.after = "meus"; go("meus", { meus: null }); } }, "Meus agendamentos") : null,
+      el("button", { class: "link", type: "button", onclick: logout }, "Sair")));
+  function logout() { const t = session?.token; setSession(null); if (t) api("sair", { token: t }).catch(() => {}); S.mode = "login"; go("auth"); }
+
+  // Garante a configuração da planilha antes das etapas que dependem dela.
+  function withConfig(draw) {
+    if (S.cfg) return draw(S.cfg);
+    loading("Carregando a agenda…");
+    loadConfig().then(c => { S.cfg = c; S.prazo = c.params.prazoHoras; render(); }).catch(fail);
+  }
+
+  const VIEWS = {
+    /* ---- 1. Cadastro / login ---- */
+    auth() {
+      const signup = S.mode === "signup";
+      body.append(
+        el("h3", {}, signup ? "Crie sua conta" : "Entrar"),
+        el("p", { class: "lead" }, signup ? "Com a conta você remarca ou cancela seus horários depois." : "Use o e-mail e a senha do seu cadastro."));
+      const form = el("form", { id: "authForm", novalidate: true });
+      if (signup) form.append(field("authName", "Nome", "text", "Seu nome completo", "name"));
+      form.append(field("authEmail", "E-mail", "email", "voce@email.com", "email"));
+      form.append(field("authPass", "Senha", "password", signup ? "Mínimo de 6 caracteres" : "Sua senha", signup ? "new-password" : "current-password"));
+      if (signup) form.append(el("label", { class: "check", for: "authLgpd" },
+        el("input", { type: "checkbox", id: "authLgpd" }),
+        el("span", {}, "Li e aceito que a Leozin Barber Studio use meu nome e e-mail para gerenciar meus agendamentos e enviar avisos sobre eles, conforme a ",
+          el("a", { href: "#politica-de-privacidade", class: "inline-link" }, "Política de Privacidade"), ".")));
+      form.append(el("p", { class: "switch" }, signup ? "Já tem conta? " : "Ainda não tem conta? ",
+        el("button", { class: "link", type: "button", onclick: () => { S.mode = signup ? "login" : "signup"; go("auth"); } }, signup ? "Entrar" : "Criar cadastro")));
+      form.addEventListener("submit", submitAuth);
+      body.append(form);
+      foot.append(el("span", { class: "summary" }, "Senha guardada de forma criptografada."),
+        el("button", { class: "btn btn-gold btn-sm", type: "submit", form: "authForm", disabled: S.busy }, S.busy ? "Aguarde…" : signup ? "Cadastrar e continuar" : "Entrar e continuar"));
+      setTimeout(() => form.querySelector("input")?.focus(), 30);
+    },
+
+    /* ---- 2. Unidade ---- */
+    unit() {
+      withConfig(c => {
+        body.append(helloBar(), el("h3", {}, "Escolha a unidade"), el("p", { class: "lead" }, "Onde você quer ser atendido?"));
+        const list = el("div", { class: "choices" });
+        for (const u of c.unidades) {
+          list.append(el("button", { class: "choice", type: "button", "aria-pressed": String(S.unit === u.id),
+            onclick: () => { if (S.unit !== u.id) Object.assign(S, { barber: null, time: null }); S.unit = u.id; go("service"); } },
+            el("span", { class: "pin" }, svgUse("pin")),
+            el("span", {}, el("strong", {}, "Unidade " + u.nome), el("small", {}, u.endereco))));
+        }
+        body.append(list);
+        foot.append(el("span", { class: "summary" }, "Toque numa unidade para continuar."),
+          btn("Continuar", "btn-gold", () => go("service"), !S.unit));
+      });
+    },
+
+    /* ---- 3. Serviço ---- */
+    service() {
+      withConfig(c => {
+        const unit = c.unidades.find(u => u.id === S.unit);
+        body.append(el("h3", {}, "Escolha o serviço"), el("p", { class: "lead" }, `Unidade ${unit.nome}. Cada serviço leva ${c.params.intervalo} minutos.`));
+        const list = el("div", { class: "services" });
+        for (const s of c.servicos) {
+          list.append(el("button", { class: "svc", type: "button", "aria-pressed": String(S.service === s.id),
+            onclick: () => { S.service = s.id; go("schedule"); } }, el("span", {}, s.nome), el("small", {}, `${s.duracao} min`)));
+        }
+        body.append(list);
+        foot.append(btn("Voltar", "btn-ghost", () => go("unit")),
+          el("span", { class: "summary" }, S.service ? c.servicos.find(s => s.id === S.service).nome : "Toque num serviço para continuar."),
+          btn("Continuar", "btn-gold", () => go("schedule"), !S.service));
+      });
+    },
+
+    /* ---- 4. Barbeiro, dia e horário (também usado na remarcação) ---- */
+    schedule() { drawSchedule(false); },
+    resched() { drawSchedule(true); },
+
+    /* ---- 5. Confirmação ---- */
+    confirm() {
+      const c = S.cfg, unit = c.unidades.find(u => u.id === S.unit), svc = c.servicos.find(s => s.id === S.service), b = c.barbeiros.find(x => x.id === S.barber);
+      body.append(el("h3", {}, "Confira e confirme"), el("p", { class: "lead" }, "Se algo estiver errado, volte e ajuste."),
+        ticket([
+          ["Cliente", [session.nome, el("br"), muted(session.email)]],
+          ["Unidade", [unit.nome, el("br"), muted(unit.endereco)]],
+          ["Serviço", [svc.nome, el("br"), muted(`${svc.duracao} min`)]],
+          ["Barbeiro", b.nome],
+          ["Data e hora", `${fmtLong(S.day)} às ${S.time}`]
+        ], `Remarque ou cancele até ${S.prazo} h antes`));
+      foot.append(btn("Voltar", "btn-ghost", () => go("schedule")),
+        btn(S.busy ? "Confirmando…" : "Confirmar agendamento", "btn-gold", confirmBooking));
+    },
+
+    /* ---- Concluído ---- */
+    done() {
+      const a = S.last;
+      body.append(el("div", { class: "done" },
+        el("div", { class: "seal" }, svgUse("crown")),
+        el("h3", {}, "Horário marcado!"),
+        el("p", { class: "lead" }, `${a.servicoNome} com ${a.barbeiroNome} na unidade ${a.unidadeNome}, ${fmtLong(a.data)} às ${a.hora}.`),
+        el("p", { class: "lead" }, `Enviamos a confirmação para ${session.email}. Você recebe um lembrete 30 minutos antes.`)));
+      foot.append(btn("Meus agendamentos", "btn-ghost", () => { S.after = "meus"; go("meus", { meus: null }); }),
+        btn("Fechar", "btn-gold", () => dlg.close()));
+    },
+
+    /* ---- Meus agendamentos ---- */
+    meus() {
+      if (!session) { S.mode = "login"; return go("auth"); }
+      body.append(helloBar(), el("h3", {}, "Meus agendamentos"),
+        el("p", { class: "lead" }, `Remarque ou cancele até ${S.prazo} h antes do horário. Só você vê esta lista.`));
+      if (!S.meus) {
+        loading("Buscando seus horários…");
+        Promise.all([api("meus", { token: session.token }), loadConfig()])
+          .then(([r, c]) => { S.cfg = c; S.meus = r.agendamentos; S.prazo = r.prazoHoras; render(); }).catch(fail);
+        return;
+      }
+      if (!S.meus.length) {
+        body.append(el("p", { class: "empty" }, "Você não tem horários marcados."));
+      } else {
+        const list = el("ul", { class: "appts" });
+        for (const a of S.meus) {
+          const actions = el("div", { class: "appt-actions" });
+          if (S.askCancel === a.id) {
+            actions.append(el("span", { class: "ask" }, "Cancelar este horário?"),
+              btn("Manter", "btn-ghost", () => go("meus", { askCancel: null })),
+              btn(S.busy ? "Cancelando…" : "Sim, cancelar", "btn-danger", () => cancelBooking(a)));
+          } else if (a.podeAlterar) {
+            actions.append(btn("Remarcar", "btn-ghost", () => startResched(a)), btn("Cancelar", "btn-ghost", () => go("meus", { askCancel: a.id, notice: null })));
+          } else {
+            actions.append(el("span", { class: "note" }, `Faltam menos de ${S.prazo} h. Para mudar, fale com a unidade.`));
+          }
+          list.append(el("li", { class: "appt" },
+            el("div", { class: "appt-when" }, el("b", {}, a.hora), el("span", {}, fmtDay(a.data))),
+            el("div", { class: "appt-info" }, el("strong", {}, a.servicoNome), el("span", {}, `${a.barbeiroNome} · Unidade ${a.unidadeNome}`), muted(a.endereco)),
+            actions));
+        }
+        body.append(list);
+      }
+      foot.append(btn("Fechar", "btn-ghost", () => dlg.close()), btn("Novo agendamento", "btn-gold", () => openBooking()));
+    },
+
+    reschedConfirm() {
+      const a = S.editing, c = S.cfg, b = c.barbeiros.find(x => x.id === S.barber);
+      body.append(el("h3", {}, "Confirmar remarcação"), el("p", { class: "lead" }, `${a.servicoNome} · Unidade ${a.unidadeNome}`),
+        ticket([
+          ["Antes", `${fmtLong(a.data)} às ${a.hora} com ${a.barbeiroNome}`],
+          ["Novo horário", [el("strong", {}, `${fmtLong(S.day)} às ${S.time}`), el("br"), muted(`com ${b.nome}`)]]
+        ], "Você recebe a confirmação por e-mail"));
+      foot.append(btn("Voltar", "btn-ghost", () => go("resched")),
+        btn(S.busy ? "Remarcando…" : "Confirmar remarcação", "btn-gold", confirmResched));
+    }
+  };
+
+  function field(id, label, type, ph, ac) {
+    return el("div", { class: "field" }, el("label", { for: id }, label), el("input", { id, name: id, type, placeholder: ph, autocomplete: ac, required: true }));
+  }
+  function ticket(rows, stub) {
+    return el("div", { class: "ticket" },
+      el("dl", {}, rows.flatMap(([k, v]) => [el("dt", {}, k), el("dd", {}, v)])),
+      el("div", { class: "stub" }, el("span", {}, "Chegue 5 min antes"), el("span", {}, stub)));
+  }
+
+  async function submitAuth(e) {
+    e.preventDefault();
+    if (S.busy) return;
+    const signup = S.mode === "signup";
+    const nameI = $("#authName"), emailI = $("#authEmail"), passI = $("#authPass"), lgpd = $("#authLgpd");
+    const invalid = (input, msg) => { S.alert = msg; render(); const i = $("#" + input.id); if (i) { i.setAttribute("aria-invalid", "true"); i.focus(); } restore(); };
+    const vals = { nome: nameI?.value.trim() || "", email: emailI.value.trim(), senha: passI.value, aceite: !!lgpd?.checked };
+    const restore = () => { if ($("#authName")) $("#authName").value = vals.nome; $("#authEmail").value = vals.email; $("#authPass").value = vals.senha; if ($("#authLgpd")) $("#authLgpd").checked = vals.aceite; };
+    if (signup && vals.nome.length < 2) return invalid(nameI, "Digite seu nome.");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(vals.email)) return invalid(emailI, "Digite um e-mail válido, como nome@email.com.");
+    if (vals.senha.length < 6) return invalid(passI, "A senha precisa ter pelo menos 6 caracteres.");
+    if (signup && !vals.aceite) return invalid(lgpd, "Para continuar, marque o aceite de uso dos dados.");
+    S.busy = true; S.alert = null; render(); restore();
+    try {
+      const r = signup ? await api("cadastrar", vals) : await api("entrar", { email: vals.email, senha: vals.senha });
+      setSession({ token: r.token, nome: r.cliente.nome, email: r.cliente.email });
+      S.busy = false;
+      if (S.after === "meus") go("meus", { meus: null }); else go(S.unit ? "service" : "unit");
+    } catch (err) {
+      S.busy = false; S.alert = err.message;
+      if (err.code === "EMAIL_EXISTE") S.mode = "login";
+      render(); restore();
+    }
+  }
+
+  function startResched(a) {
+    Object.assign(S, { editing: a, unit: a.unidade, barber: a.barbeiro, day: null, time: null, slots: {}, notice: null, askCancel: null });
+    go("resched");
+  }
+
+  function drawSchedule(resched) {
+    withConfig(c => {
+      const unitId = S.unit, unit = c.unidades.find(u => u.id === unitId);
+      const team = c.barbeiros.filter(b => b.unidade === unitId);
+      if (!S.barber || !team.some(b => b.id === S.barber)) S.barber = team[0]?.id;
+      const a = S.editing;
+      body.append(el("h3", {}, resched ? "Novo horário" : "Barbeiro e horário"),
+        el("p", { class: "lead" }, resched
+          ? `Atual: ${fmtLong(a.data)} às ${a.hora} com ${a.barbeiroNome}. Escolha o novo horário.`
+          : `Unidade ${unit.nome}. Horários de ${c.params.intervalo} em ${c.params.intervalo} minutos.`));
+
+      body.append(el("p", { class: "sub" }, "Barbeiro"));
+      const bp = el("div", { class: "barber-pick" });
+      for (const b of team) {
+        const img = BARBERS[b.id]?.img;
+        bp.append(el("button", { class: "bp", type: "button", "aria-pressed": String(S.barber === b.id),
+          onclick: () => { S.barber = b.id; S.time = null; render(); } },
+          img ? el("img", { src: img, alt: "" }) : el("span", { class: "bp-ph" }, b.nome[0]), el("span", {}, b.nome)));
+      }
+      body.append(bp);
+
+      const key = `${unitId}|${S.barber}`;
+      const data = S.slots[key];
+      if (!data) {
+        loading("Buscando horários livres…");
+        api("horarios", { unidade: unitId, barbeiro: S.barber }, true)
+          .then(r => { S.slots[key] = r.dias; render(); }).catch(fail);
+        foot.append(btn("Voltar", "btn-ghost", () => resched ? go("meus") : go("service")), btn("Continuar", "btn-gold", null, true));
+        return;
+      }
+      const days = data;
+      const free = d => d.slots.filter(s => s.livre).length;
+      if (!S.day || !days.some(d => d.data === S.day && d.aberto)) S.day = (days.find(d => d.aberto && free(d)) || days.find(d => d.aberto) || days[0]).data;
+
+      body.append(el("p", { class: "sub" }, "Dia"));
+      const dg = el("div", { class: "days", role: "group", "aria-label": "Próximos 7 dias" });
+      days.forEach((d, i) => {
+        const n = free(d);
+        dg.append(el("button", { class: "day", type: "button", disabled: !d.aberto, "aria-pressed": String(S.day === d.data),
+          "aria-label": d.aberto ? `${fmtLong(d.data)}, ${n} horários livres` : `${fmtLong(d.data)}, fechado`,
+          onclick: () => { S.day = d.data; S.time = null; render(); } },
+          el("small", {}, i === 0 ? "Hoje" : WEEK[dow(d.data)]), el("b", {}, d.data.slice(8)),
+          el("em", {}, !d.aberto ? "fechado" : n ? `${n} livres` : "lotado")));
+      });
+      body.append(dg);
+
+      const day = days.find(d => d.data === S.day);
+      body.append(el("p", { class: "sub" }, `Horários · ${WEEK_FULL[dow(day.data)]} (${c.params.abertura} às ${c.params.fechamento})`));
+      if (!day.slots.some(s => s.livre)) {
+        body.append(el("p", { class: "empty" }, "Não há horários livres nesse dia. Escolha outro dia ou outro barbeiro."));
+      } else {
+        const sg = el("div", { class: "slots" });
+        for (const s of day.slots) {
+          sg.append(el("button", { class: "slot", type: "button", disabled: !s.livre, "aria-pressed": String(S.time === s.hora),
+            "aria-label": s.livre ? `${s.hora} livre` : `${s.hora} ocupado`, onclick: () => { S.time = s.hora; render(); } }, s.hora));
+        }
+        body.append(sg, el("div", { class: "legend" }, el("span", {}, "Riscado = ocupado"),
+          c.params.almocoInicio ? el("span", {}, `Almoço ${c.params.almocoInicio}–${c.params.almocoFim}`) : null));
+      }
+      const bName = team.find(b => b.id === S.barber)?.nome;
+      foot.append(btn("Voltar", "btn-ghost", () => resched ? go("meus") : go("service")),
+        el("span", { class: "summary" }, S.time ? `${bName} · ${fmtDay(S.day)} às ${S.time}` : "Escolha um horário."),
+        btn("Continuar", "btn-gold", () => go(resched ? "reschedConfirm" : "confirm"), !S.time));
+    });
+  }
+
+  async function confirmBooking() {
+    S.busy = true; render();
+    try {
+      const r = await api("agendar", { token: session.token, unidade: S.unit, servico: S.service, barbeiro: S.barber, data: S.day, hora: S.time });
+      S.busy = false; S.last = r.agendamento; S.slots = {}; S.meus = null; go("done");
+    } catch (e) {
+      S.busy = false;
+      if (e.code === "HORARIO_OCUPADO") { S.slots = {}; S.time = null; return go("schedule", { alert: e.message }); }
+      fail(e);
+    }
+  }
+  async function confirmResched() {
+    S.busy = true; render();
+    const a = S.editing;
+    try {
+      const r = await api("remarcar", { token: session.token, id: a.id, barbeiro: S.barber, data: S.day, hora: S.time });
+      S.busy = false; const n = r.agendamento;
+      go("meus", { meus: null, editing: null, slots: {}, notice: `Remarcado para ${fmtLong(n.data)} às ${n.hora}. Enviamos a confirmação por e-mail.` });
+    } catch (e) {
+      S.busy = false;
+      if (e.code === "HORARIO_OCUPADO") { S.slots = {}; S.time = null; return go("resched", { alert: e.message }); }
+      if (e.code === "FORA_DO_PRAZO") return go("meus", { meus: null, alert: e.message });
+      fail(e);
+    }
+  }
+  async function cancelBooking(a) {
+    S.busy = true; render();
+    try {
+      await api("cancelar", { token: session.token, id: a.id });
+      S.busy = false;
+      go("meus", { meus: null, askCancel: null, slots: {}, notice: `Cancelado: ${a.servicoNome}, ${fmtLong(a.data)} às ${a.hora}. Enviamos a confirmação por e-mail.` });
+    } catch (e) {
+      S.busy = false;
+      go("meus", { meus: null, askCancel: null, alert: e.message });
+    }
+  }
+
+  // Link "Meus agendamentos" dos e-mails abre direto a área do cliente.
+  if (location.hash === "#meus-agendamentos") openMeus();
+  window.addEventListener("hashchange", () => { if (location.hash === "#meus-agendamentos") openMeus(); });
+})();
+</script>
