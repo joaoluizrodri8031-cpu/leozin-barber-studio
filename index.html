@@ -90,14 +90,14 @@ section.block{padding-block:clamp(4rem,9vw,7rem)}
 @media (prefers-reduced-motion:reduce){.ribbon-track{animation:none}}
 
 /* ---------- Portfólio ---------- */
-.gallery{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:clamp(190px,24vw,300px);gap:12px}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:clamp(220px,28vw,360px);gap:12px}
 .shot{position:relative;margin:0;border-radius:var(--radius);overflow:hidden;background:var(--char);cursor:zoom-in;border:0;padding:0;color:inherit;text-align:left}
 .shot img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease,filter .4s}
 .shot:hover img{transform:scale(1.05)}
 .shot .cap{position:absolute;inset:auto 0 0 0;padding:2.4rem 1rem .9rem;background:linear-gradient(0deg,rgba(8,6,4,.92),transparent);font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
 .shot .cap small{display:block;color:var(--gold);font-size:.66rem;letter-spacing:.2em}
-.shot.big{grid-column:span 2;grid-row:span 2}
-@media (max-width:760px){.gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:190px}.shot.big{grid-row:span 1;grid-column:span 2}.shot:last-child{grid-column:span 2}}
+.shot.big{grid-row:span 2}
+@media (max-width:760px){.gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:clamp(190px,58vw,260px)}.shot.big{grid-column:span 2;grid-row:span 2}}
 
 .lightbox{position:fixed;inset:0;z-index:90;background:rgba(6,5,3,.94);display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
 .lightbox img{max-height:84vh;width:auto;border-radius:var(--radius)}
@@ -316,12 +316,11 @@ dialog.book::backdrop{background:rgba(5,4,3,.78);backdrop-filter:blur(3px)}
         <p>Alguns cortes e barbas feitos no estúdio. Toque numa foto para ver maior.</p>
       </div>
       <div class="gallery">
-        <button class="shot big" type="button" data-src="assets/p1.jpg"><img src="assets/p1.jpg" alt="Barbeiro tatuado acertando o contorno com navalha" loading="lazy"><span class="cap"><small>Navalha</small>Contorno navalhado</span></button>
-        <button class="shot" type="button" data-src="assets/p2.jpg"><img src="assets/p2.jpg" alt="Corte com tesoura e pente na lateral" loading="lazy"><span class="cap"><small>Tesoura</small>Degradê na tesoura</span></button>
-        <button class="shot" type="button" data-src="assets/p3.jpg"><img src="assets/p3.jpg" alt="Barba sendo aparada na tesoura" loading="lazy"><span class="cap"><small>Barba</small>Barba desenhada</span></button>
-        <button class="shot" type="button" data-src="assets/p4.jpg"><img src="assets/p4.jpg" alt="Corte com risco desenhado na lateral" loading="lazy"><span class="cap"><small>Freestyle</small>Risco + mid fade</span></button>
-        <button class="shot" type="button" data-src="assets/p5.jpg"><img src="assets/p5.jpg" alt="Máquina fazendo o acabamento do fade" loading="lazy"><span class="cap"><small>Máquina</small>Low fade</span></button>
-        <button class="shot" type="button" data-src="assets/p6.jpg"><img src="assets/p6.jpg" alt="Acabamento com máquina na lateral" loading="lazy"><span class="cap"><small>Acabamento</small>Pezinho e lateral</span></button>
+        <button class="shot big" type="button" data-src="assets/port-1.jpg"><img src="assets/port-1.jpg" alt="Corte com mid fade e topo curto texturizado, visto de perfil" loading="lazy"><span class="cap"><small>Máquina</small>Mid fade</span></button>
+        <button class="shot" type="button" data-src="assets/port-2.jpg"><img src="assets/port-2.jpg" alt="Degradê alto com topo curto, visto de perfil" loading="lazy"><span class="cap"><small>Máquina</small>Degradê alto</span></button>
+        <button class="shot" type="button" data-src="assets/port-3.jpg"><img src="assets/port-3.jpg" alt="Corte com topo longo e laterais em low fade" loading="lazy"><span class="cap"><small>Tesoura</small>Low fade com topo longo</span></button>
+        <button class="shot" type="button" data-src="assets/port-4.jpg"><img src="assets/port-4.jpg" alt="Cliente com topo platinado, fade nas laterais e barba alinhada" loading="lazy"><span class="cap"><small>Química</small>Platinado + fade</span></button>
+        <button class="shot" type="button" data-src="assets/port-5.jpg"><img src="assets/port-5.jpg" alt="Barbeiro fazendo o acabamento do fade com máquina na lateral" loading="lazy"><span class="cap"><small>Acabamento</small>Pezinho e lateral</span></button>
       </div>
     </div>
   </section>
